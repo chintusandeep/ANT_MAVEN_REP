@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+   <project name="Hello World Project" default="init">
+   
+   <target name="init">
+		<echo>Hello World - Welcome to Apache Ant!</echo>
+		<!-- <property file = "build.properties"/> -->
+		<property name = "src.dir" value = "src"/>
+		<property name = "dest.dir" value = "dest"/>
+   </target>
+   
+   <target name="clean" depends="init">
+		<echo>Hello World - Welcome to Apache Ant2!</echo>
+		<echo>Entered into clean target</echo>
+	  <delete includeEmptyDirs="true">
+		<fileset dir="${dest.dir}"/>
+	  </delete>
+   </target>
+   
+   <target depends="init" name="prepare">
+		<mkdir dir="${dest.dir}" />
+		<mkdir dir="${dest.dir}\ExampleApp" />
+		<mkdir dir="${dest.dir}\ExampleApp\test" />
+   </target>
+   
+   <target name="build" depends="clean,prepare">
+		<javac destdir="${dest.dir}\ExampleApp" includeantruntime="false">
+			<src path = "${src.dir}" />
+		</javac>
+   </target>
+   
+   <target name="copy" depends="clean,prepare,build">
+		<copy file="${src.dir}\sample.properties" tofile="${dest.dir}\ExampleApp\test\sample.properties"/>
+	</target>
+</project>
